@@ -25,7 +25,7 @@ fi
 while true; do
   IS_NEUTRINO=`grep -c 'bitcoin.node=neutrino' /lnd/lnd.conf`
   if [ $IS_NEUTRINO -eq 1 ]; then
-    echo "If set to neutrino then lets check"
+    echo "If set to neutrino then lets check bitcoind"
 
     INFO=`curl --user lncm:$PASSWORD --data-binary '{"jsonrpc": "1.0", "id":"switchme", "method": "getblockchaininfo", "params": [] }' $JSONRPCURL 2>/dev/null`
     # check for errors
@@ -48,7 +48,11 @@ while true; do
               echo "Bitcoind has been switched across to neutrino"
               touch /statuses/node-status-bitcoind-ready
               sed -i 's/bitcoin.node\=neutrino/bitcoin.node\=bitcoind/g; ' /lnd/lnd.conf
+          else
+              echo "Node isn't full synched yet"
           fi
+        else
+            echo "LND is already switched to bitcoind!"
         fi
       else
         echo "No need to switch from neutrino in pruned mode"
