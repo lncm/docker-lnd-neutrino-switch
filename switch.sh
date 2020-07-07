@@ -64,6 +64,8 @@ while true; do
     fi
   else
     echo "Neutrino mode has been disabled"
+    echo "Switchback is not supported in this version"
+
     #TODO: Lets maybe try to switch back
   fi
   # Run every every 1 hour
