@@ -16,7 +16,11 @@
 # Output: /statuses/node-status-bitcoind-ready  (when ready, where a service can pick it up)
 # Then
 PASSWORD=`cat /secrets/rpcpass.txt`
-JSONRPCURL="http://10.254.2.2:8332"
+
+# If JSONRPCURL doesn't exist then set it
+if [ -z $JSONRPCURL ]; then
+    JSONRPCURL="http://10.254.2.2:8332"
+fi
 
 while true; do
   IS_NEUTRINO=`grep -c 'bitcoin.node=neutrino' /lnd/lnd.conf`
