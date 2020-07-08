@@ -1,6 +1,10 @@
 # LND Neutrino Switch Contrainer
 
-![Docker Pulls Count](https://img.shields.io/docker/pulls/lncm/neutrino-switcher.svg?style=flat)
+[![Docker Pulls Count](https://img.shields.io/docker/pulls/lncm/neutrino-switcher.svg?style=flat)](https://hub.docker.com/r/lncm/neutrino-switcher)
+
+The purpose of this container is to switch between neutrino and bitcoind as bitcoind takes a long time to sync, and the node is note available. So we will bootstrap a lightning node at lightning speed.
+
+This will only work if pruning is disabled as its not recommended to use lnd with bitcoind with the ```prune=``` setting. It does work but theres some side effects to it.
 
 ## Clone directory
 
