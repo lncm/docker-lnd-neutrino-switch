@@ -16,7 +16,7 @@ docker pull lncm/neutrino-switcher
 
 You may map these anywhere in your filesystem. For best results works best with a similar setup to [this one](https://github.com/lncm/thebox-compose-system)
 
-- /secrets/rpcpass.txt (Bitcoin RPC Password)
+- /secrets/rpcpass.txt (Bitcoin RPC Password. Not used if RPCPASS variable is explicitly defined)
 - /lnd/lnd.conf (LND configuration. For best results write access please)
 - /statuses/ (Write access)
 - /var/run/docker.sock (is mapped correctly so it can restart the container)
