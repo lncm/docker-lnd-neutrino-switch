@@ -27,3 +27,4 @@ Other than that everything should be in the default paths.
 
 - JSONRPCURL (Default: http://10.254.2.2:8332) : Is the JSON-RPC interface for bitcoind
 - LND_CONTAINER_NAME (Default: lnd) : is the container name to restart
+- SLEEPTIME (Default: 3600) : Configures how often to poll. Ideally we should set this high so we minimize disruptions, but we might want to set it lower for testing.
