@@ -10,11 +10,11 @@ docker pull lncm/neutrino-switcher
 
 ## Files/Folders it needs access to
 
-You may map these anywhere in your filesystem
+You may map these anywhere in your filesystem. For best results works best with a similar setup to [this one](https://github.com/lncm/thebox-compose-system)
 
 - /secrets/rpcpass.txt (Bitcoin RPC Password)
 - /lnd/lnd.conf (LND configuration. For best results write access please)
-- /statuses/ (Write access)
+- /statuses/ (Write access for notifying of changes to other scripts for now)
 
 ## Environment Variables
 
