@@ -43,7 +43,7 @@ switch_on_sync_done() {
 		return
 	fi
 
-	if err="$(jq -ner "${INFO:-{}} | .error")"; then
+	if [ -z "$INFO" ] || err="$(jq -ner "$INFO | .error")"; then
 		echo 'Error: from bitcoind'
 		echo "${err:-Unknown error}"
 		return
