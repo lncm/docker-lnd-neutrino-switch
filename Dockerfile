@@ -1,12 +1,10 @@
-FROM alpine:3.10
+FROM alpine:3.12
 
-RUN apk add --no-cache curl jq bash
+RUN apk add --no-cache curl jq
 
-RUN mkdir /lnd/
-RUN mkdir /secrets/
-RUN mkdir /statuses/
+RUN mkdir /lnd/ /secrets/ /statuses/
 
-COPY switch.sh /bin/switch
-RUN chmod +x /bin/switch
+COPY switch.sh /usr/local/bin/switch
+RUN chmod +x   /usr/local/bin/switch
 
-ENTRYPOINT ["switch"]
+ENTRYPOINT ["/usr/local/bin/switch"]
