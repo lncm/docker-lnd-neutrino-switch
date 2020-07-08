@@ -17,6 +17,11 @@
 # Then
 PASSWORD=`cat /secrets/rpcpass.txt`
 
+# If sleeptime isn't set, set it to 3600 (1 hour)
+if [ -z $SLEEPTIME ]; then
+    SLEEPTIME=3600
+fi
+
 # If JSONRPCURL doesn't exist then set it
 if [ -z $JSONRPCURL ]; then
     JSONRPCURL="http://10.254.2.2:8332"
@@ -83,6 +88,6 @@ while true; do
 
     #TODO: Lets maybe try to switch back
   fi
-  # Run every every 1 hour
-  sleep 3600
+  # Run every every 1 hour by default or as per configurable
+  sleep $SLEEPTIME
 done
