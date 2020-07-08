@@ -22,6 +22,11 @@ if [ -z $JSONRPCURL ]; then
     JSONRPCURL="http://10.254.2.2:8332"
 fi
 
+# if LND_CONTAINER_NAME doesn't exist then set it
+if [ -z $LND_CONTAINER_NAME ]; then
+    LND_CONTAINER_NAME="lnd"
+fi
+
 while true; do
   IS_NEUTRINO=`grep -c 'bitcoin.node=neutrino' /lnd/lnd.conf`
   if [ $IS_NEUTRINO -eq 1 ]; then
