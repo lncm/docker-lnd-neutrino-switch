@@ -21,3 +21,4 @@ You may map these anywhere in your filesystem
 Other than that everything should be in the default paths.
 
 - JSONRPCURL (Default: http://10.254.2.2:8332) : Is the JSON-RPC interface for bitcoind
+- LND_CONTAINER_NAME (Default: lncm_lnd_1) : is the container name to restart
