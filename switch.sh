@@ -14,8 +14,12 @@
 # Allow access to 'statuses'. /statuses/
 
 # Output: /statuses/node-status-bitcoind-ready  (when ready, where a service can pick it up)
-# Then
-PASSWORD=`cat /secrets/rpcpass.txt`
+
+
+# if RPCPASS doesn't exist then set it (Default to whats in /secrets/rpcpass.txt)
+if [ -z $RPCPASS ]; then
+    RPCPASS=`cat /secrets/rpcpass.txt`
+fi
 
 # If sleeptime isn't set, set it to 3600 (1 hour)
 if [ -z $SLEEPTIME ]; then
@@ -37,7 +41,7 @@ while true; do
   if [ $IS_NEUTRINO -eq 1 ]; then
     echo "If set to neutrino then lets check bitcoind"
 
-    INFO=`curl --user lncm:$PASSWORD --data-binary '{"jsonrpc": "1.0", "id":"switchme", "method": "getblockchaininfo", "params": [] }' $JSONRPCURL 2>/dev/null`
+    INFO=`curl --user lncm:$RPCPASS --data-binary '{"jsonrpc": "1.0", "id":"switchme", "method": "getblockchaininfo", "params": [] }' $JSONRPCURL 2>/dev/null`
     # check for errors
     ERROR=`echo $INFO | jq .error`
     if [ ! -z $ERROR ]; then
