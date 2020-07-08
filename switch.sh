@@ -15,25 +15,10 @@
 
 # Output: /statuses/node-status-bitcoind-ready  (when ready, where a service can pick it up)
 
-# if RPCPASS doesn't exist then set it (Default to whats in /secrets/rpcpass.txt)
-if [ -z $RPCPASS ]; then
-    RPCPASS="$(cat /secrets/rpcpass.txt)"
-fi
-
-# If sleeptime isn't set, set it to 3600 (1 hour)
-if [ -z $SLEEPTIME ]; then
-    SLEEPTIME=3600
-fi
-
-# If JSONRPCURL doesn't exist then set it
-if [ -z "$JSONRPCURL" ]; then
-    JSONRPCURL='http://10.254.2.2:8332'
-fi
-
-# if LND_CONTAINER_NAME doesn't exist then set it
-if [ -z $LND_CONTAINER_NAME ]; then
-    LND_CONTAINER_NAME="lnd"
-fi
+RPCPASS="${RPCPASS:-$(cat /secrets/rpcpass.txt)}"  # Default password location: /secrets/rpcpass.txt
+SLEEPTIME="${SLEEPTIME:-3600}"                     # Default sleep: 3600
+JSONRPCURL="${JSONRPCURL:-http://10.254.2.2:8332}" # Default RPC endpoint: http://10.254.2.2:8332
+LND_CONTAINER_NAME="${LND_CONTAINER_NAME:-lnd}"    # Default Docker container name: lnd
 
 PREV_MATCH=
 
@@ -53,7 +38,7 @@ switch_on_sync_done() {
 
 	echo 'If set to neutrino then lets check bitcoind'
 
-	if ! INFO="$(curl --silent --user "lncm:$RPCPASS" --data-binary '{"jsonrpc": "1.0", "id":"switchme", "method": "getblockchaininfo", "params": [] }' $JSONRPCURL)"; then
+	if ! INFO="$(curl --silent --user "lncm:$RPCPASS" --data-binary '{"jsonrpc": "1.0", "id":"switchme", "method": "getblockchaininfo", "params": [] }' "$JSONRPCURL")"; then
 		echo "Error: 'getblockchaininfo' request to bitcoind failed"
 		return
 	fi
@@ -96,9 +81,9 @@ switch_on_sync_done() {
 	touch /statuses/node-status-bitcoind-ready
 	sed -Ei 's|(bitcoin.node)=neutrino|\1=bitcoind|g' /lnd/lnd.conf
   
-  echo "Restarting LND"
-  docker stop $LND_CONTAINER_NAME
-  docker start $LND_CONTAINER_NAME
+	echo "Restarting LND"
+	docker stop  "$LND_CONTAINER_NAME"
+	docker start "$LND_CONTAINER_NAME"
 }
 
 while true; do
@@ -108,5 +93,5 @@ while true; do
 	fi
 
 	# Run every every 1 hour by default or as per configurable
-	sleep $SLEEPTIME
+	sleep "$SLEEPTIME"
 done
