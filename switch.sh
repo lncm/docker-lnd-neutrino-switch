@@ -48,6 +48,16 @@ while true; do
               echo "Bitcoind has been switched across to neutrino"
               touch /statuses/node-status-bitcoind-ready
               sed -i 's/bitcoin.node\=neutrino/bitcoin.node\=bitcoind/g; ' /lnd/lnd.conf
+              echo "Attempting to Restarting LND"
+              if command -v docker &> /dev/null; then
+                # restart docker
+                docker stop $LND_CONTAINER_NAME
+                docker start $LND_CONTAINER_NAME
+              else
+                echo "Docker command doesn't exist, reverting config"
+                rm /statuses/node-status-bitcoind-ready
+                sed -i 's/bitcoin.node\=bitcoind/bitcoin.node\=neutrino/g; ' /lnd/lnd.conf
+              fi
           else
               echo "Node isn't full synched yet"
           fi
