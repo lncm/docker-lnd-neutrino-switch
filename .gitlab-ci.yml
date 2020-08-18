@@ -8,7 +8,7 @@ services:
     - docker:dind
 
 before_script:
-    - apt install -y docker qemu-user-static
+    - apt update && apt install -y docker qemu-user-static
     - curl -L --output /docker-buildx "https://github.com/docker/buildx/releases/download/v0.3.1/buildx-v0.3.1.linux-amd64"
     - chmod a+x /docker-buildx
     - cp /docker-buildx /usr/lib/docker/cli-plugins/docker-buildx
