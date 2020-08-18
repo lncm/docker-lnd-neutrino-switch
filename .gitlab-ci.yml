@@ -7,10 +7,12 @@ variables:
 services:
     - docker:dind
 
+before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker buildx create --use
+
 build:
     stage: build
     script:
-        - docker login registry.gitlab.com
-        - docker buildx create --use
-        - docker buildx build --platform linux/arm64/v8,linux/amd64 --tag nolim1t/lnd-unlock:gl-$DOCKER_ENV_CI_COMMIT_REF_SLUG . 
+        - docker buildx build --platform linux/arm64/v8,linux/amd64 --tag $CI_REGISTRY_IMAGE:$DOCKER_ENV_CI_COMMIT_REF_SLUG . 
 
