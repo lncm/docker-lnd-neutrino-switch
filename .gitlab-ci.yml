@@ -11,8 +11,9 @@ before_script:
     - apt update && apt install -y docker.io curl qemu-user-static
     - curl -L --output /docker-buildx "https://github.com/docker/buildx/releases/download/v0.3.1/buildx-v0.3.1.linux-amd64"
     - chmod a+x /docker-buildx
-    - mkdir -p /usr/lib/docker/cli-plugins/
     - cp /docker-buildx /usr/lib/docker/cli-plugins/docker-buildx
+    - echo '{"experimental": true}' | sudo tee -a /etc/docker/daemon.json
+    - systemctl restart docker
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker buildx create --use
 
