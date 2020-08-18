@@ -1,4 +1,4 @@
-image: docker:stable
+image: jdrouet/docker-with-buildx:stable
 
 variables:
     DOCKER_HOST: tcp://docker:2375/
@@ -10,6 +10,8 @@ services:
 build:
     stage: build
     script:
+        - export
         - docker version
+        - docker buildx create --use
 
 
