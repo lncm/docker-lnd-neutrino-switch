@@ -1,4 +1,4 @@
-image: debian:buster-slim
+image: jdrouet/docker-with-buildx:stable
 
 variables:
     DOCKER_HOST: tcp://docker:2375/
@@ -7,16 +7,11 @@ variables:
 services:
     - docker:dind
 
-before_script:
-    - apt update && apt install -y docker.io curl qemu-user-static
-    - "echo '{\"experimental\": true}' | tee -a /etc/docker/daemon.json"
-    - /etc/init.d/docker restart
-    - sleep 30
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker buildx create --use
-
 build:
     stage: build
     script:
-        - docker buildx build --platform linux/arm64/v8,linux/amd64 --tag $CI_REGISTRY_IMAGE:$DOCKER_ENV_CI_COMMIT_REF_SLUG . 
+        - apk add qemu
+        - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+        - docker buildx create --use
+        - docker buildx build --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --tag $CI_REGISTRY_IMAGE:$DOCKER_ENV_CI_COMMIT_REF_SLUG . 
 
