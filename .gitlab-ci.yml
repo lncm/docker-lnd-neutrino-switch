@@ -10,8 +10,8 @@ services:
 before_script:
     - apt update && apt install -y docker.io curl qemu-user-static
     - "echo '{\"experimental\": true}' | tee -a /etc/docker/daemon.json"
-    - systemctl restart docker
-    - sleep 20
+    - /etc/init.d/docker restart
+    - sleep 30
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker buildx create --use
 
