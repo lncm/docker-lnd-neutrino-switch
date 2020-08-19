@@ -1,5 +1,7 @@
 # LND Neutrino Switch Contrainer
 
+![Build on tag](https://github.com/lncm/docker-lnd-neutrino-switch/workflows/Docker%20build%20on%20tag/badge.svg)
+![Version](https://img.shields.io/github/v/release/lncm/docker-lnd-neutrino-switch?sort=semver) 
 [![Docker Pulls Count](https://img.shields.io/docker/pulls/lncm/neutrino-switcher.svg?style=flat)](https://hub.docker.com/r/lncm/neutrino-switcher)
 
 The purpose of this container is to switch between neutrino and bitcoind as bitcoind takes a long time to sync, and the node is note available. So we will bootstrap a lightning node at lightning speed.
