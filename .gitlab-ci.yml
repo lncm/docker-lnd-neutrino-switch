@@ -13,5 +13,6 @@ build:
         - apk add qemu
         - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
         - docker buildx create --use
+        - docker info
         - docker buildx build --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --tag $CI_REGISTRY_IMAGE:$DOCKER_ENV_CI_COMMIT_REF_SLUG . 
 
