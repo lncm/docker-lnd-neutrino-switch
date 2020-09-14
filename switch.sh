@@ -15,6 +15,7 @@
 
 # Output: /statuses/node-status-bitcoind-ready  (when ready, where a service can pick it up)
 
+RPCUSER="${RPCUSER:-lncm}"			   # Default Username: lncm
 RPCPASS="${RPCPASS:-$(cat /secrets/rpcpass.txt)}"  # Default password location: /secrets/rpcpass.txt
 SLEEPTIME="${SLEEPTIME:-3600}"                     # Default sleep: 3600
 JSONRPCURL="${JSONRPCURL:-http://10.254.2.2:8332}" # Default RPC endpoint: http://10.254.2.2:8332
@@ -38,7 +39,7 @@ switch_on_sync_done() {
 
 	echo 'If set to neutrino then lets check bitcoind'
 
-	if ! INFO="$(curl --silent --user "lncm:$RPCPASS" --data-binary '{"jsonrpc": "1.0", "id":"switchme", "method": "getblockchaininfo", "params": [] }' "$JSONRPCURL")"; then
+	if ! INFO="$(curl --silent --user "$RPCUSER:$RPCPASS" --data-binary '{"jsonrpc": "1.0", "id":"switchme", "method": "getblockchaininfo", "params": [] }' "$JSONRPCURL")"; then
 		echo "Error: 'getblockchaininfo' request to bitcoind failed"
 		return
 	fi
