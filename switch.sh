@@ -15,6 +15,10 @@
 
 # Output: /statuses/node-status-bitcoind-ready  (when ready, where a service can pick it up)
 
+# Trap signal SIGINT - Explicitly define it
+trap exit INT
+
+# Setup environment variables
 RPCUSER="${RPCUSER:-lncm}"			   # Default Username: lncm
 RPCPASS="${RPCPASS:-$(cat /secrets/rpcpass.txt)}"  # Default password location: /secrets/rpcpass.txt
 SLEEPTIME="${SLEEPTIME:-3600}"                     # Default sleep: 3600
